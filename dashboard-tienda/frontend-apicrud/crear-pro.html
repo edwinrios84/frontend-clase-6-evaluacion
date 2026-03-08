@@ -346,7 +346,7 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+                        <h1 class="h3 mb-0 text-gray-800" id="titulo-pagina">Crear / Editar Producto</h1>
                         <a href="listado-pro.html" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
                             <i class="fas fa-list fa-sm text-white-50"></i> Listado </a>
                     </div>
@@ -354,13 +354,13 @@
                     <!-- Content Row -->
                     <div class="row">
                         <div class="col-6">
-                            <form>
+                            <form id="formProducto">
                           
                                 <!-- Text input -->
                                 <div data-mdb-input-init class="form-outline mb-4">
                                     <select id="productos-select" class="form-select form-control">
-                                        <option selected>Seleccionar un producto</option>
-                                        <option value="Hamburguesa">Hambruguesa</option>
+                                        <option value="">Seleccionar un producto</option>
+                                        <option value="Hamburguesa">Hamburguesa</option>
                                         <option value="Picada">Picada</option>
                                         <option value="Pasta">Pasta</option>
                                         <option value="Perro">Perro</option>
@@ -382,19 +382,19 @@
     
                                 <!-- Number input -->
                                 <div data-mdb-input-init class="form-outline mb-4">
-                                  <input type="number" id="form6Example6" class="form-control" />
-                                  <label class="form-label" for="form6Example6">Stock</label>
+                                  <input type="number" id="stock-pro" class="form-control" min="0" />
+                                  <label class="form-label" for="stock-pro">Stock</label>
                                 </div>
                               
                                 <!-- Message input -->
                                 <div data-mdb-input-init class="form-outline mb-4">
-                                  <textarea class="form-control" id="form6Example7" rows="4"></textarea>
-                                  <label class="form-label" for="form6Example7">Descripcion</label>
+                                  <textarea class="form-control" id="descripcion-pro" rows="4"></textarea>
+                                  <label class="form-label" for="descripcion-pro">Descripción</label>
                                 </div>
                             
                               
                                 <!-- Submit button -->
-                                <button data-mdb-ripple-init type="button" class="btn btn-primary btn-block mb-4">Crear Producto</button>
+                                <button data-mdb-ripple-init type="button" id="btnGuardarProducto" class="btn btn-primary btn-block mb-4">Crear Producto</button>
                             </form>
                         </div>
                         <div class="col-5">
@@ -468,71 +468,8 @@
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
 
-    <script>
-        let imagenes = [
-            {
-                name: "Hamburguesa",
-                precio: 30000,
-                url: "https://th.bing.com/th/id/R.c691ed37c9ce3040c3ebd2892e88870c?rik=QUBcFflN%2b9oqPQ&pid=ImgRaw&r=0"
-            },
-            {
-                name: "Pizza",
-                precio: 45000,
-                url: "https://www.ocu.org/-/media/ocu/images/home/alimentacion/alimentos/pizzas_selector_1600x900.jpg?rev=6a81e278-07fc-4e95-9ba1-361063f35adf&hash=B8B1264AB6FC3F4B1AE140EB390208CD"
-            },
-            {
-                name: "Pasta",
-                precio: 25000,
-                url: "https://cdn.shopify.com/s/files/1/2538/5286/products/Spaghetti-with-Meat-Sauce-Recipe-1-1200_787x787.jpg?v=1588772697"
-            },
-            {
-                name: "Perro",
-                precio: 22000,
-                url: "https://th.bing.com/th/id/OIP.2QjcuwsTimAImo8WSQdTdAHaFp?rs=1&pid=ImgDetMain"
-            },
-            {
-                name: "Burrito",
-                precio: 25000,
-                url: "https://th.bing.com/th/id/R.1a7d6f0af7be590eb4e27d96ce3530e5?rik=eiCcb%2f%2b9TYNzXQ&pid=ImgRaw&r=0"
-            },
-            {
-                name: "Tacos",
-                precio: 26000,
-                url: "https://th.bing.com/th/id/R.d50b293e5d2de51d349691db78f71f8c?rik=FfttXcgxjuqR%2fQ&pid=ImgRaw&r=0"
-            },
-            {
-                name: "Pollo",
-                precio: 35000,
-                url: "https://th.bing.com/th/id/OIP.IAza-1yPPvzA55qlI0VqvQHaF7?w=744&h=595&rs=1&pid=ImgDetMain"
-            },
-            {
-                name: "Chuzo",
-                precio: 22000,
-                url: "https://th.bing.com/th/id/R.c0d3de5bd13edcc5323d074e4ba8f864?rik=lFbTsZF0ESAN5w&pid=ImgRaw&r=0"
-            },
-            {
-                name: "Sanchipapa",
-                precio: 20000,
-                url: "https://1.bp.blogspot.com/-6lKIIVq3CXw/WK8raCAD-gI/AAAAAAABMnI/5VoCplTPogASfSZS5XzIFZizMBZ8yO8bQCLcB/s1600/salchipapa%2Bcolombiana.png"
-            },
-            {
-                name: "Picada",
-                precio: 65000,
-                url: "https://cdn.colombia.com/gastronomia/2016/06/21/picada-colombiana-2990.jpg"
-            }
-        ];
-        let selectImagen = document.querySelector('#productos-select');
-        let imagenMostrada = document.querySelector('#imagen-pro');
-        let precioInput = document.querySelector("#precio-pro");
-
-        selectImagen.addEventListener('change', () => {
-            const imagenSeleccionada = imagenes.find(imagen => imagen.name == selectImagen.value);
-            imagenMostrada.src = imagenSeleccionada.url;
-            imagenMostrada.alt = imagenSeleccionada.nombre;
-            precioInput.value = imagenSeleccionada.precio;
-        });
-            
-    </script>
+    <!-- Formulario crear/editar producto -->
+    <script src="js/crear-pro.js"></script>
 
 </body>
 

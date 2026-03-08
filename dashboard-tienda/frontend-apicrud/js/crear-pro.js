@@ -74,15 +74,18 @@ document.addEventListener("DOMContentLoaded", () => {
   const selectProducto = document.querySelector("#productos-select");
   const imagenProducto = document.querySelector("#imagen-pro");
   const inputPrecio = document.querySelector("#precio-pro");
-  const inputStock = document.querySelector("#form6Example6");
-  const inputDescripcion = document.querySelector("#form6Example7");
-  const botonGuardar = document.querySelector(
-    "button.btn.btn-primary.btn-block"
-  );
+  const inputStock = document.querySelector("#stock-pro");
+  const inputDescripcion = document.querySelector("#descripcion-pro");
+  const botonGuardar = document.querySelector("#btnGuardarProducto");
 
   if (!selectProducto || !imagenProducto || !inputPrecio || !inputStock || !inputDescripcion || !botonGuardar) {
     console.error("No se encontraron todos los elementos del formulario de producto.");
     return;
+  }
+
+  const formProducto = document.querySelector("#formProducto");
+  if (formProducto) {
+    formProducto.addEventListener("submit", (e) => e.preventDefault());
   }
 
   // Configurar cambio de imagen y precio según la opción seleccionada
@@ -171,7 +174,7 @@ function configurarCambioProducto(selectProducto, imagenProducto, inputPrecio) {
  */
 function seleccionarProductoInicial(selectProducto, imagenProducto, inputPrecio) {
   const primeraOpcionValida = Array.from(selectProducto.options).find(
-    (opcion) => opcion.value && opcion.value !== "Seleccionar un producto"
+    (opcion) => opcion.value && opcion.value.trim() !== ""
   );
 
   if (!primeraOpcionValida) {
@@ -222,8 +225,18 @@ async function cargarProductoParaEdicion(
 
     const producto = await respuesta.json();
 
-    // Intentar seleccionar en el <select> el nombre que viene de la BD
+    // Intentar seleccionar en el <select> el nombre que viene de la BD.
+    // Si no existe esa opción, añadirla para poder editar productos con nombre personalizado.
     if (producto.nombre) {
+      const opcionExistente = Array.from(selectProducto.options).find(
+        (opt) => opt.value === producto.nombre
+      );
+      if (!opcionExistente) {
+        const nuevaOpcion = document.createElement("option");
+        nuevaOpcion.value = producto.nombre;
+        nuevaOpcion.textContent = producto.nombre;
+        selectProducto.appendChild(nuevaOpcion);
+      }
       selectProducto.value = producto.nombre;
     }
 
@@ -295,7 +308,7 @@ function construirDatosProducto(
  * @returns {boolean} true si es válido, false si hay errores.
  */
 function validarDatosProducto(datosProducto) {
-  if (!datosProducto.nombre || datosProducto.nombre === "Seleccionar un producto") {
+  if (!datosProducto.nombre || datosProducto.nombre.trim() === "") {
     alert("Selecciona un nombre de producto válido.");
     return false;
   }
