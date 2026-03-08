@@ -245,6 +245,18 @@
                                 <!-- Productos carrito -->
                                 <div class="form-outline mb-4">
                                     <h5>Productos del Pedido</h5>
+
+                                    <!-- Selección de producto y botón para agregar al carrito -->
+                                    <div class="d-flex mb-3">
+                                        <select id="producto-select" class="form-control mr-2">
+                                            <option value="">Seleccionar Producto</option>
+                                            <!-- Se llena dinámicamente con GET /api/productos -->
+                                        </select>
+                                        <button type="button" id="btnAgregarProducto" class="btn btn-success">
+                                            Agregar
+                                        </button>
+                                    </div>
+
                                     <table class="table" id="tabla-carrito">
                                         <thead class="table-light">
                                             <tr>
@@ -344,14 +356,7 @@
     <script src="js/sb-admin-2.min.js"></script>
 
     <!-- Los estudiantes deben agregar aquí el JavaScript -->
-    <script>
-        // TODO: Implementar:
-        // 1. GET /api/clientes para llenar select de clientes
-        // 2. GET /api/productos para que puedan seleccionar productos
-        // 3. Agregar productos al carrito dinámicamente
-        // 4. Calcular total (productos + descuento + aumento)
-        // 5. POST a /api/pedidos con los datos del formulario
-    </script>
+    <script src="js/pedidos.js"></script>
 
 </body>
 
